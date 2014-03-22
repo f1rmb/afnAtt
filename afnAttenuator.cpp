@@ -71,6 +71,9 @@ byte afnAttenuator::Inc(byte val)
 
 byte afnAttenuator::Dec(byte val)
 {
+    if (val >= GetValue())
+        return SetValue(ATTENUATION_MIN);
+
     return SetValue(GetValue() - val);
 }
 
