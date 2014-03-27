@@ -23,12 +23,14 @@
 
 #include "afnAttenuator.h"
 
-const byte afnAttenuator::ATTENUATION_MIN   = 0;
-const byte afnAttenuator::ATTENUATION_MAX   = 31;
+const uint8_t afnAttenuator::ATTENUATION_MIN   = 0;
+const uint8_t afnAttenuator::ATTENUATION_MAX   = 31;
 
 afnAttenuator::afnAttenuator(uint8_t rate) : m_Att(ATTENUATION_MIN)
 {
     //ctor
+    m_correctionFactor = 0.8;
+
     SPI.begin();
     SPI.setBitOrder(MSBFIRST);
     SPI.setDataMode(SPI_MODE3);
@@ -43,14 +45,19 @@ afnAttenuator::~afnAttenuator()
     //SetValue(ATTENUATION_MIN);
 }
 
-byte afnAttenuator::GetValue()
+uint8_t afnAttenuator::GetValue()
 {
     return m_Att;
 }
 
-byte afnAttenuator::SetValue(const byte &val, bool force)
+double afnAttenuator::GetRealValue()
 {
-    byte oldAtt = m_Att;
+    return (static_cast<double>(m_Att) * m_correctionFactor);;
+}
+
+uint8_t afnAttenuator::SetValue(const uint8_t &val, bool force)
+{
+    uint8_t oldAtt = m_Att;
 
     m_Att = constrain(val, ATTENUATION_MIN, ATTENUATION_MAX);
 
@@ -64,12 +71,12 @@ byte afnAttenuator::SetValue(const byte &val, bool force)
     return m_Att;
 }
 
-byte afnAttenuator::Inc(byte val)
+uint8_t afnAttenuator::Inc(uint8_t val)
 {
     return SetValue(GetValue() + val);
 }
 
-byte afnAttenuator::Dec(byte val)
+uint8_t afnAttenuator::Dec(uint8_t val)
 {
     if (val >= GetValue())
         return SetValue(ATTENUATION_MIN);
@@ -77,11 +84,12 @@ byte afnAttenuator::Dec(byte val)
     return SetValue(GetValue() - val);
 }
 
-byte afnAttenuator::GetMin()
+uint8_t afnAttenuator::GetMin()
 {
     return ATTENUATION_MIN;
 }
-byte afnAttenuator::GetMax()
+
+uint8_t afnAttenuator::GetMax()
 {
     return ATTENUATION_MAX;
 }

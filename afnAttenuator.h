@@ -28,21 +28,23 @@
 
 class afnAttenuator
 {
-    static const byte ATTENUATION_MIN;
-    static const byte ATTENUATION_MAX;
+    static const uint8_t ATTENUATION_MIN;
+    static const uint8_t ATTENUATION_MAX;
 
     public:
         afnAttenuator(uint8_t rate = SPI_CLOCK_DIV4);
         virtual ~afnAttenuator();
-        byte GetValue();
-        byte SetValue(const byte &val, bool force = false);
-        byte Inc(byte val = 1);
-        byte Dec(byte val = 1);
-        byte GetMin();
-        byte GetMax();
+        uint8_t                     GetValue();
+        double                      GetRealValue();
+        uint8_t                     SetValue(const uint8_t &val, bool force = false);
+        uint8_t                     Inc(uint8_t val = 1);
+        uint8_t                     Dec(uint8_t val = 1);
+        uint8_t                     GetMin();
+        uint8_t                     GetMax();
 
     private:
-        byte m_Att;
+        uint8_t     m_Att;
+        double      m_correctionFactor;
 };
 
 #endif // AFNATTENUATOR_H

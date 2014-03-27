@@ -76,17 +76,17 @@ void loop()
 
             if ((buf[0] == '+')  || (buf[0] == '-'))
             {
-                byte step = 1;
+                uint8_t step = 1;
 
                 if (strlen(buf) > 1)
                     step = atoi(&buf[1]);
 
-                byte oV = mAtt.GetValue();
-                byte oD = oV;
+                uint8_t oV = mAtt.GetValue();
+                uint8_t oD = oV;
 
-                Serial.print(" > Inc/Dec(");
+                Serial.print(F(" > Inc/Dec("));
                 Serial.print(step, DEC);
-                Serial.print("): ");
+                Serial.print(F("): "));
 
                 if (buf[0] == '+')
                 {
@@ -100,39 +100,39 @@ void loop()
                 }
 
                 if (oD == mAtt.GetValue())
-                    Serial.print("  ** Success: ");
+                    Serial.print(F("  ** Success: "));
                 else
                 {
-                    Serial.print("  !! Failure: ");
-                    Serial.print("Asked: ");
+                    Serial.print(F("  !! Failure: "));
+                    Serial.print(F("Asked: "));
                     Serial.print(oD, DEC);
-                    Serial.print(" Sets: ");
+                    Serial.print(F(" Sets: "));
                     Serial.print(mAtt.GetValue(), DEC);
-                    Serial.print(" - ");
+                    Serial.print(F(" - "));
                 }
 
-                Serial.print("Attenuation sets to ");
+                Serial.print(F("Attenuation sets to "));
                 Serial.print(mAtt.GetValue(), DEC);
-                Serial.println("dB.");
+                Serial.println(F("dB."));
 
                 break;
 
             }
 
             int attv = atoi(buf);
-            Serial.print(" > Setting attenuation to ");
+            Serial.print(F(" > Setting attenuation to "));
             Serial.print(attv, DEC);
-            Serial.print("dB: ");
+            Serial.print(F("dB: "));
 
-            byte ret;
+            uint8_t ret;
             if ((ret = mAtt.SetValue(attv)) == attv)
-                Serial.print("  ** Success: ");
+                Serial.print(F("  ** Success: "));
             else
-                Serial.print("  !! Failure: ");
+                Serial.print(F("  !! Failure: "));
 
-            Serial.print("Attenuation sets to ");
+            Serial.print(F("Attenuation sets to "));
             Serial.print(ret, DEC);
-            Serial.println("dB.");
+            Serial.println(F("dB."));
         }
 
         delay(50);
