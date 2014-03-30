@@ -46,7 +46,7 @@ Connect GND  to 'G'
 
 */
 
-afnAttenuator mAtt;
+afnAttenuator mAtt(SPI_CLOCK_DIV128);
 
 void setup()
 {

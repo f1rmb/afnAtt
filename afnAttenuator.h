@@ -30,6 +30,8 @@ class afnAttenuator
 {
     static const uint8_t ATTENUATION_MIN;
     static const uint8_t ATTENUATION_MAX;
+    static const float   SLOPE;
+    static const float   OFFSET;
 
     public:
         afnAttenuator(uint8_t rate = SPI_CLOCK_DIV4);
@@ -44,7 +46,6 @@ class afnAttenuator
 
     private:
         uint8_t     m_Att;
-        double      m_correctionFactor;
 };
 
 #endif // AFNATTENUATOR_H

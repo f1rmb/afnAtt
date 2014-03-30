@@ -25,12 +25,12 @@
 
 const uint8_t afnAttenuator::ATTENUATION_MIN   = 0;
 const uint8_t afnAttenuator::ATTENUATION_MAX   = 31;
+const float   afnAttenuator::SLOPE             = 0.9628758065;
+const float   afnAttenuator::OFFSET            = 1.6597935484;
 
 afnAttenuator::afnAttenuator(uint8_t rate) : m_Att(ATTENUATION_MIN)
 {
     //ctor
-    m_correctionFactor = 0.8;
-
     SPI.begin();
     SPI.setBitOrder(MSBFIRST);
     SPI.setDataMode(SPI_MODE3);
@@ -52,7 +52,7 @@ uint8_t afnAttenuator::GetValue()
 
 double afnAttenuator::GetRealValue()
 {
-    return (static_cast<double>(m_Att) * m_correctionFactor);;
+    return ((static_cast<double>(m_Att) * SLOPE) + OFFSET);
 }
 
 uint8_t afnAttenuator::SetValue(const uint8_t &val, bool force)
